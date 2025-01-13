@@ -1,5 +1,9 @@
 package com.ll.cafeservice.domain.product;
 
-public class Product {
+import lombok.Getter;
 
+import java.time.LocalDateTime;
+
+@Getter
+public class Product {
 }

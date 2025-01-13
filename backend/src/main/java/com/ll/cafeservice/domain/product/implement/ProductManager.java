@@ -17,5 +17,6 @@ public class ProductManager {
 
     public void addProduct(NewProduct product) {
         // TODO : NewProduct 객체의 정보를 적절히 분배하여 Repository 안에 저장한다.
+
     }
 }

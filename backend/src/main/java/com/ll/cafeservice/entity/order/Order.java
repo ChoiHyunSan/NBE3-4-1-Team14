@@ -4,6 +4,7 @@ import com.ll.cafeservice.entity.base.BaseEntity;
 import jakarta.persistence.*;
 
 @Entity
+@Table(name = "orders")
 public class Order extends BaseEntity {
 
     @Id

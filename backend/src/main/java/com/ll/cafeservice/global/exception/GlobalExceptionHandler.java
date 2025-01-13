@@ -1,5 +1,6 @@
 package com.ll.cafeservice.global.exception;
 
+import com.ll.cafeservice.api.Empty;
 import com.ll.cafeservice.api.Result;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -13,7 +14,7 @@ public class GlobalExceptionHandler {
 
     @ResponseStatus(HttpStatus.FORBIDDEN)
     @ExceptionHandler(AccessDeniedException.class)
-    public Result<Void> handleAccessDeniedException(AccessDeniedException e) {
+    public Result<Empty> handleAccessDeniedException(AccessDeniedException e) {
         return Result.error(403, "접근 권한이 없습니다.");
     }
 

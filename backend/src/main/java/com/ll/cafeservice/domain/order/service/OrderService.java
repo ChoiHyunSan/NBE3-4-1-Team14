@@ -12,7 +12,6 @@ public class OrderService {
     public OrderResponse order(OrderRequest request) {
         // TODO : 주문을 처리한다.
 
-
-        return new OrderResponse();
+        return new OrderResponse(1L, "주문 성공");
     }
 }

@@ -1,5 +1,8 @@
 package com.ll.cafeservice.domain.product;
 
-public class NewProduct {
+import java.time.LocalDateTime;
 
+public class NewProduct {
+    String name;
+    Integer price;
 }

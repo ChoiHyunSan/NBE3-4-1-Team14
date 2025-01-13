@@ -7,6 +7,8 @@ import com.ll.cafeservice.domain.product.dto.response.ProductCreateResponse;
 import com.ll.cafeservice.domain.product.dto.response.ProductInfoResponse;
 import com.ll.cafeservice.domain.product.implement.ProductManager;
 import com.ll.cafeservice.domain.product.implement.ProductReader;
+import com.ll.cafeservice.domain.product.implement.ProductValidator;
+import com.ll.cafeservice.entity.product.product.ProductDetail;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -18,6 +20,7 @@ public class ProductService {
 
     private ProductManager productManager;
     private ProductReader productReader;
+    private ProductValidator productValidator;
 
     public ProductCreateResponse addProduct(final ProductCreateRequest request) {
         
@@ -31,6 +34,11 @@ public class ProductService {
         return new ProductCreateResponse();
     }
 
+    public void func(){
+        Product product = new Product();
+
+    }
+
     public List<ProductInfoResponse> getList() {
         return productReader.findAll().stream()
                 .map(product -> {
@@ -38,6 +46,6 @@ public class ProductService {
                     ProductInfoResponse response = new ProductInfoResponse();
                     return response;
                 }).toList();
-
     }
+
 }
