@@ -11,11 +11,12 @@ export default function ClientPage({
       <header>
         <div className="flex gap-2 p-5">
           <Link href="/">홈</Link>
-          <Link href="/about">소개</Link>
-          <Link href="/login"> 로그인 </Link>
+          {/* <Link href="/about">소개</Link> */}
+          <Link href="/products">상품조회</Link>
+          <Link href="/orders">주문 내역 확인</Link>
         </div>
       </header>
-      <main className="border-[2px] border-[blue]">{children}</main>
+      <main className="border-[2px]">{children}</main>
       <footer className="border-[2px] border-[green]">Copyright 2025.</footer>
     </>
   );

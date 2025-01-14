@@ -28,6 +28,7 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-[100vh] bg-white border-[5px] text-black`}
       >
+        <h1 className="text-center text-2xl font-bold">Grids & Circles</h1>
         <ClientLayout>{children}</ClientLayout>
       </body>
     </html>
