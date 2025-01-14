@@ -3,6 +3,7 @@ package com.ll.cafeservice.domain.delivery.controller.v1;
 import com.ll.cafeservice.api.Result;
 import com.ll.cafeservice.domain.delivery.dto.response.DeliveryResponse;
 import com.ll.cafeservice.domain.delivery.service.DeliveryService;
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,7 +21,9 @@ public class DeliveryControllerV1 {
 
     private DeliveryService deliveryService;
 
+    // 배송 내역 조회
     @GetMapping("/{email}")
+    @Operation(summary = "배송 조회", description = "고객의 배송 내역을 반환합니다.")
     public Result<List<DeliveryResponse>> list(
         @PathVariable String email
     ){

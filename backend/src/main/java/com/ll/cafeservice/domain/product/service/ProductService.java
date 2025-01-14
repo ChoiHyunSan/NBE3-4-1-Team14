@@ -31,7 +31,7 @@ public class ProductService {
         productManager.addProduct(newProduct);
 
         // 3. 품목 저장에 대한 요청 반환
-        return new ProductCreateResponse();
+        return new ProductCreateResponse(1L, "1");
     }
 
     public void func(){
@@ -43,7 +43,7 @@ public class ProductService {
         return productReader.findAll().stream()
                 .map(product -> {
                     // 도메인 객체를 Response 형태로 변환
-                    ProductInfoResponse response = new ProductInfoResponse();
+                    ProductInfoResponse response = new ProductInfoResponse(1L, "1", 1, "1");
                     return response;
                 }).toList();
     }

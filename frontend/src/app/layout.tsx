@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import Link from "next/link";
+import ClientLayout from "./ClientLayout";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -28,19 +28,7 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-[100vh] bg-white border-[5px] text-black`}
       >
-        <header className="border-[2px] border-[red]">
-          <div className="flex gap-2 p-5">
-            <Link href="/">홈</Link>
-            <Link href="/about">소개</Link>
-          </div>
-        </header>
-        <main className="border-[2px] border-[blue]">
-          {children} Lorem ipsum dolor sit amet consectetur adipisicing elit.
-          Voluptas dolore dolor unde eligendi modi labore laboriosam repellendus
-          maxime. In impedit perferendis voluptatem animi eius quis repellat,
-          soluta provident atque
-        </main>
-        <footer className="border-[2px] border-[green]">Copyright 2025.</footer>
+        <ClientLayout>{children}</ClientLayout>
       </body>
     </html>
   );

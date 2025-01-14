@@ -1,5 +1,6 @@
 package com.ll.cafeservice.domain.order.controller.v1;
 
+import com.ll.cafeservice.api.Empty;
 import com.ll.cafeservice.api.Result;
 import com.ll.cafeservice.domain.order.dto.request.OrderRequest;
 import com.ll.cafeservice.domain.order.dto.response.OrderResponse;
@@ -9,10 +10,9 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @Tag(name = "OrderControllerV1", description = "API 주문요청 컨트롤러")
 @Slf4j
@@ -33,6 +33,15 @@ public class OrderControllerV1 {
     public Result<OrderResponse> order(
         @RequestBody @Valid OrderRequest request
     ){
+        log.info("주문 요청이 왔습니다.");
         return Result.success(orderService.order(request));
+    }
+
+    // 이메일에 해당하는 주문 내역을 확인한다.
+    @GetMapping("/{email}")
+    public Result<List<OrderResponse>> list(
+            @PathVariable String email
+    ){
+        return Result.success(orderService.getList(email));
     }
 }

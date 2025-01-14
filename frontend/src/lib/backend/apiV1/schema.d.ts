@@ -12,8 +12,25 @@ export interface paths {
             cookie?: never;
         };
         get?: never;
-        put?: never;
+        put: operations["updateProduct"];
         post: operations["createProduct"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/user/login": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** 로그인 */
+        post: operations["login"];
         delete?: never;
         options?: never;
         head?: never;
@@ -56,7 +73,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/api/v1/delivery/{email}": {
+    "/api/v1/order/{email}": {
         parameters: {
             query?: never;
             header?: never;
@@ -67,6 +84,42 @@ export interface paths {
         put?: never;
         post?: never;
         delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/delivery/{email}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * 배송 조회
+         * @description 고객의 배송 내역을 반환합니다.
+         */
+        get: operations["list_2"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/product/{itemId}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        delete: operations["deleteProduct"];
         options?: never;
         head?: never;
         patch?: never;
@@ -89,9 +142,58 @@ export interface components {
             message: string;
             data: components["schemas"]["Empty"];
         };
-        ProductCreateRequest: Record<string, never>;
+        ProductUpdateRequest: {
+            name: string;
+            /** Format: int32 */
+            price: number;
+            description: string;
+            /** Format: int32 */
+            quantity: number;
+        };
+        /** @description 결과 반환용 객체 */
+        ResultProductUpdateRequest: {
+            /**
+             * Format: int32
+             * @description 상태 코드
+             */
+            statusCode: number;
+            /** @description 클라 전달용 메시지 */
+            message: string;
+            data: components["schemas"]["ProductUpdateRequest"];
+        };
+        LoginRequest: {
+            username?: string;
+            password?: string;
+        };
         /** @description 반환 데이터 */
-        ProductCreateResponse: Record<string, never>;
+        LoginResponse: {
+            username: string;
+        };
+        /** @description 결과 반환용 객체 */
+        ResultLoginResponse: {
+            /**
+             * Format: int32
+             * @description 상태 코드
+             */
+            statusCode: number;
+            /** @description 클라 전달용 메시지 */
+            message: string;
+            data: components["schemas"]["LoginResponse"];
+        };
+        ProductCreateRequest: {
+            name: string;
+            /** Format: int32 */
+            price: number;
+            description: string;
+            /** Format: int32 */
+            quantity: number;
+        };
+        /** @description 반환 데이터 */
+        ProductCreateResponse: {
+            /** Format: int64 */
+            id: number;
+            message: string;
+        };
         /** @description 결과 반환용 객체 */
         ResultProductCreateResponse: {
             /**
@@ -103,7 +205,24 @@ export interface components {
             message: string;
             data: components["schemas"]["ProductCreateResponse"];
         };
-        OrderRequest: Record<string, never>;
+        /** @description 아이템 정보 */
+        OrderItem: {
+            /**
+             * Format: int64
+             * @description 상품 아이디
+             */
+            productId: number;
+            /**
+             * Format: int32
+             * @description 상품 개수
+             */
+            quantity: number;
+        };
+        OrderRequest: {
+            items: components["schemas"]["OrderItem"][];
+            customerEmail: string;
+            address: string;
+        };
         /** @description 반환 데이터 */
         OrderResponse: {
             /**
@@ -111,8 +230,10 @@ export interface components {
              * @description 주문 ID
              */
             id: number;
-            /** @description 주문 이름 */
-            name: string;
+            /** @description 주문자 이메일 */
+            email: string;
+            /** @description 주문 품목 */
+            items: components["schemas"]["OrderItem"][];
         };
         /** @description 결과 반환용 객체 */
         ResultOrderResponse: {
@@ -126,7 +247,14 @@ export interface components {
             data: components["schemas"]["OrderResponse"];
         };
         /** @description 반환 데이터 */
-        ProductInfoResponse: Record<string, never>;
+        ProductInfoResponse: {
+            /** Format: int64 */
+            id: number;
+            name: string;
+            /** Format: int32 */
+            price: number;
+            description: string;
+        };
         /** @description 결과 반환용 객체 */
         ResultListProductInfoResponse: {
             /**
@@ -139,8 +267,25 @@ export interface components {
             /** @description 반환 데이터 */
             data: components["schemas"]["ProductInfoResponse"][];
         };
+        /** @description 결과 반환용 객체 */
+        ResultListOrderResponse: {
+            /**
+             * Format: int32
+             * @description 상태 코드
+             */
+            statusCode: number;
+            /** @description 클라 전달용 메시지 */
+            message: string;
+            /** @description 반환 데이터 */
+            data: components["schemas"]["OrderResponse"][];
+        };
         /** @description 반환 데이터 */
-        DeliveryResponse: Record<string, never>;
+        DeliveryResponse: {
+            email: string;
+            /** Format: date */
+            deliveryDate: string;
+            items: components["schemas"]["OrderItem"][];
+        };
         /** @description 결과 반환용 객체 */
         ResultListDeliveryResponse: {
             /**
@@ -153,6 +298,18 @@ export interface components {
             /** @description 반환 데이터 */
             data: components["schemas"]["DeliveryResponse"][];
         };
+        /** @description 결과 반환용 객체 */
+        ResultVoid: {
+            /**
+             * Format: int32
+             * @description 상태 코드
+             */
+            statusCode: number;
+            /** @description 클라 전달용 메시지 */
+            message: string;
+            /** @description 반환 데이터 */
+            data: Record<string, never>;
+        };
     };
     responses: never;
     parameters: never;
@@ -162,6 +319,39 @@ export interface components {
 }
 export type $defs = Record<string, never>;
 export interface operations {
+    updateProduct: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ProductUpdateRequest"];
+            };
+        };
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json;charset=UTF-8": components["schemas"]["ResultProductUpdateRequest"];
+                };
+            };
+            /** @description Forbidden */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json;charset=UTF-8": components["schemas"]["ResultEmpty"];
+                };
+            };
+        };
+    };
     createProduct: {
         parameters: {
             query?: never;
@@ -182,6 +372,39 @@ export interface operations {
                 };
                 content: {
                     "application/json;charset=UTF-8": components["schemas"]["ResultProductCreateResponse"];
+                };
+            };
+            /** @description Forbidden */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json;charset=UTF-8": components["schemas"]["ResultEmpty"];
+                };
+            };
+        };
+    };
+    login: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["LoginRequest"];
+            };
+        };
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json;charset=UTF-8": components["schemas"]["ResultLoginResponse"];
                 };
             };
             /** @description Forbidden */
@@ -274,7 +497,69 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
+                    "application/json;charset=UTF-8": components["schemas"]["ResultListOrderResponse"];
+                };
+            };
+            /** @description Forbidden */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json;charset=UTF-8": components["schemas"]["ResultEmpty"];
+                };
+            };
+        };
+    };
+    list_2: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                email: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
                     "application/json;charset=UTF-8": components["schemas"]["ResultListDeliveryResponse"];
+                };
+            };
+            /** @description Forbidden */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json;charset=UTF-8": components["schemas"]["ResultEmpty"];
+                };
+            };
+        };
+    };
+    deleteProduct: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                itemId: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json;charset=UTF-8": components["schemas"]["ResultVoid"];
                 };
             };
             /** @description Forbidden */

@@ -2,7 +2,8 @@ package com.ll.cafeservice.domain.product.dto.request;
 
 import jakarta.validation.constraints.NotEmpty;
 
-public record ProductCreateRequest(
+
+public record ProductUpdateRequest(
 
         @NotEmpty
         String name,

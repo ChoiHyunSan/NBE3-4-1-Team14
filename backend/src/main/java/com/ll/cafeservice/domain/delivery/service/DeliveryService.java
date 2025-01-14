@@ -5,6 +5,7 @@ import com.ll.cafeservice.domain.delivery.implement.DeliveryReader;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Service
@@ -16,7 +17,7 @@ public class DeliveryService {
     public List<DeliveryResponse> getList(String email) {
         return deliveryReader.findByEmail(email).stream()
                 .map(delivery ->{
-                    return new DeliveryResponse();
+                    return new DeliveryResponse("1", LocalDate.now(), List.of());
                 }).toList();
     }
 }
