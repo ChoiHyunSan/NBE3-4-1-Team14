@@ -18,9 +18,9 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ProductService {
 
-    private ProductManager productManager;
-    private ProductReader productReader;
-    private ProductValidator productValidator;
+    private final ProductManager productManager;
+    private final ProductReader productReader;
+    private final ProductValidator productValidator;
 
     public ProductCreateResponse addProduct(final ProductCreateRequest request) {
         
